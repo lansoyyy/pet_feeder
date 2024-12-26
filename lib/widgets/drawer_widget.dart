@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pet_feeder/screens/add_pet_screen.dart';
+import 'package:pet_feeder/screens/home_screen.dart';
+import 'package:pet_feeder/screens/my_pets_screen.dart';
+import 'package:pet_feeder/screens/schedule_feed.dart';
 import 'package:pet_feeder/widgets/text_widget.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -45,7 +49,10 @@ class _MyDrawerState extends State<DrawerWidget> {
                 color: Colors.black,
                 fontFamily: 'Bold',
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const HomeScreen()));
+              },
             ),
             ListTile(
               leading: const Icon(Icons.av_timer_rounded),
@@ -55,7 +62,10 @@ class _MyDrawerState extends State<DrawerWidget> {
                 color: Colors.black,
                 fontFamily: 'Bold',
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const ScheduleFeedScreen()));
+              },
             ),
             ListTile(
               leading: const Icon(Icons.pets_outlined),
@@ -65,7 +75,10 @@ class _MyDrawerState extends State<DrawerWidget> {
                 color: Colors.black,
                 fontFamily: 'Bold',
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const MyPetsScreen()));
+              },
             ),
             ListTile(
               leading: const Icon(Icons.add_box_outlined),
@@ -75,7 +88,10 @@ class _MyDrawerState extends State<DrawerWidget> {
                 color: Colors.black,
                 fontFamily: 'Bold',
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const AddPetScreen()));
+              },
             ),
           ],
         ),
