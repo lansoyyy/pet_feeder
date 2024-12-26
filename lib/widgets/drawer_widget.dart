@@ -1,83 +1,85 @@
 import 'package:flutter/material.dart';
 import 'package:pet_feeder/widgets/text_widget.dart';
 
-import '../utils/colors.dart';
-
-class DrawerWidget extends StatelessWidget {
+class DrawerWidget extends StatefulWidget {
   const DrawerWidget({super.key});
 
   @override
+  State<DrawerWidget> createState() => _MyDrawerState();
+}
+
+class _MyDrawerState extends State<DrawerWidget> {
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      height: double.infinity,
-      width: 250,
-      color: Colors.blue[100],
-      child: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.only(top: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: primary),
-                      shape: BoxShape.circle,
-                      color: Colors.white),
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.5),
-                    child: Image.asset(
-                      'assets/images/RTA logo 1.png',
-                      height: 35,
-                    ),
-                  ),
-                ),
-                TextWidget(
-                  text: 'Zuc Ram Jr.',
-                  fontFamily: 'Bold',
-                  fontSize: 16,
-                ),
-                Builder(builder: (context) {
-                  return IconButton(
-                    onPressed: () {
-                      Scaffold.of(context).closeDrawer();
-                    },
-                    icon: const Icon(
-                      Icons.menu,
-                      color: primary,
-                      size: 32,
-                    ),
-                  );
-                }),
-              ],
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            ListTile(
-              onTap: () {
-                // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                //     builder: (context) => const HomeScreen()));
-              },
-              title: TextWidget(
-                text: 'Help',
+    return SizedBox(
+      width: 220,
+      child: Drawer(
+        child: ListView(
+          padding: const EdgeInsets.only(top: 0),
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              decoration: const BoxDecoration(
+                color: Colors.brown,
+              ),
+              accountEmail: TextWidget(
+                  text: 'Capstone Project', fontSize: 8, color: Colors.white),
+              accountName: TextWidget(
+                text: 'Pet Feeder',
                 fontSize: 14,
-                fontFamily: 'Bold',
+                color: Colors.white,
+              ),
+              currentAccountPicture: const Padding(
+                padding: EdgeInsets.all(5.0),
+                child: CircleAvatar(
+                  minRadius: 50,
+                  maxRadius: 50,
+                  backgroundImage: AssetImage('assets/images/logo.png'),
+                ),
               ),
             ),
             ListTile(
+              leading: const Icon(Icons.front_hand_outlined),
               title: TextWidget(
-                text: 'About iParkPatrol',
-                fontSize: 14,
+                text: 'Feed Pet',
+                fontSize: 12,
+                color: Colors.black,
                 fontFamily: 'Bold',
               ),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.av_timer_rounded),
+              title: TextWidget(
+                text: 'Schedule Feed',
+                fontSize: 12,
+                color: Colors.black,
+                fontFamily: 'Bold',
+              ),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.pets_outlined),
+              title: TextWidget(
+                text: 'My Pets',
+                fontSize: 12,
+                color: Colors.black,
+                fontFamily: 'Bold',
+              ),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.add_box_outlined),
+              title: TextWidget(
+                text: 'Add Pet',
+                fontSize: 12,
+                color: Colors.black,
+                fontFamily: 'Bold',
+              ),
+              onTap: () {},
             ),
           ],
         ),
-      )),
+      ),
     );
   }
 }
