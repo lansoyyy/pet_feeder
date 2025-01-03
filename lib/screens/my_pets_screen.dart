@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_feeder/utils/colors.dart';
 import 'package:pet_feeder/widgets/drawer_widget.dart';
@@ -41,38 +42,58 @@ class MyPetsScreen extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-      body: ListView.builder(
-        itemCount: pets.length,
-        itemBuilder: (context, index) {
-          final pet = pets[index];
-
-          return ListTile(
-            leading: pet['image'] != null
-                ? CircleAvatar(
-                    backgroundImage: AssetImage(pet['image']!),
-                  )
-                : const CircleAvatar(
-                    child: Icon(Icons.pets),
-                  ),
-            title: Text(pet['name'] ?? ''),
-            subtitle: Text('${pet['breed']} - ${pet['age']} years old'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PetDetailsPage(pet: pet),
-                ),
+      body: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection('Pets').snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              print(snapshot.error);
+              return const Center(child: Text('Error'));
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Padding(
+                padding: EdgeInsets.only(top: 50),
+                child: Center(
+                    child: CircularProgressIndicator(
+                  color: Colors.black,
+                )),
               );
-            },
-          );
-        },
-      ),
+            }
+
+            final data = snapshot.requireData;
+            return ListView.builder(
+              itemCount: data.docs.length,
+              itemBuilder: (context, index) {
+                final pet = data.docs[index];
+
+                return ListTile(
+                  leading: pet['img'] != null
+                      ? CircleAvatar(
+                          backgroundImage: NetworkImage(pet['img']!),
+                        )
+                      : const CircleAvatar(
+                          child: Icon(Icons.pets),
+                        ),
+                  title: Text(pet['name'] ?? ''),
+                  subtitle: Text('${pet['breed']} - ${pet['age']} years old'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PetDetailsPage(pet: pet.data()),
+                      ),
+                    );
+                  },
+                );
+              },
+            );
+          }),
     );
   }
 }
 
 class PetDetailsPage extends StatelessWidget {
-  final Map<String, String> pet;
+  final dynamic pet;
 
   const PetDetailsPage({super.key, required this.pet});
 
@@ -91,9 +112,9 @@ class PetDetailsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: pet['image'] != null
-                  ? Image.asset(
-                      pet['image']!,
+              child: pet['img'] != null
+                  ? Image.network(
+                      pet['img']!,
                       height: 200,
                       width: 200,
                       fit: BoxFit.cover,
