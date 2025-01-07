@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pet_feeder/screens/alarm_screen.dart';
+import 'package:pet_feeder/services/add_feed.dart';
 import 'package:pet_feeder/utils/colors.dart';
 import 'package:pet_feeder/widgets/drawer_widget.dart';
 import 'package:pet_feeder/widgets/text_widget.dart';
@@ -136,9 +138,13 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             TextButton(
               onPressed: () {
-                // Handle the selected value
-                print('Selected: $_selectedValue');
-                Navigator.of(context).pop(); // Close the dialog
+                DateTime now = DateTime.now();
+                String formattedTime =
+                    DateFormat('HH:mm').format(now); // 24-hour format
+                addFeed(_selectedValue, DateTime.now().year,
+                    DateTime.now().month, DateTime.now().day, formattedTime);
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const AlarmScreen()));
               },
               child: const Text('OK'),
             ),

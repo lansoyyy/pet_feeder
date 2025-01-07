@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pet_feeder/screens/schedules_screen.dart';
+import 'package:pet_feeder/services/add_schedule_feed.dart';
 import 'package:pet_feeder/utils/colors.dart';
 import 'package:pet_feeder/widgets/button_widget.dart';
 import 'package:pet_feeder/widgets/drawer_widget.dart';
 import 'package:pet_feeder/widgets/text_widget.dart';
+import 'package:pet_feeder/widgets/toast_widget.dart';
 
 class ScheduleFeedScreen extends StatefulWidget {
   const ScheduleFeedScreen({super.key});
@@ -27,6 +30,17 @@ class _ScheduleFeedScreenState extends State<ScheduleFeedScreen> {
           fontSize: 18,
           color: Colors.white,
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const SchedulesScreen()));
+            },
+            icon: const Icon(
+              Icons.calendar_month,
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: Padding(
@@ -101,7 +115,13 @@ class _ScheduleFeedScreenState extends State<ScheduleFeedScreen> {
               const Spacer(),
               Center(
                 child: ButtonWidget(
-                  onPressed: () {},
+                  onPressed: () {
+                    String formattedTime =
+                        '${_selectedTime!.hour.toString().padLeft(2, '0')}:${_selectedTime!.minute.toString().padLeft(2, '0')}';
+                    addScheduledFeed(DateTime.now().year, DateTime.now().month,
+                        DateTime.now().day, formattedTime);
+                    showToast('Feed Schedule saved!');
+                  },
                   label: 'Save',
                 ),
               ),
