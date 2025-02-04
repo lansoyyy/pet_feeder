@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_feeder/screens/add_pet_screen.dart';
+import 'package:pet_feeder/screens/analytics_screen.dart';
 import 'package:pet_feeder/screens/home_screen.dart';
 import 'package:pet_feeder/screens/my_pets_screen.dart';
 import 'package:pet_feeder/screens/schedule_feed.dart';
@@ -91,6 +92,19 @@ class _MyDrawerState extends State<DrawerWidget> {
               onTap: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => const AddPetScreen()));
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.dashboard_outlined),
+              title: TextWidget(
+                text: 'Analytics',
+                fontSize: 12,
+                color: Colors.black,
+                fontFamily: 'Bold',
+              ),
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const AnalyticsScreen()));
               },
             ),
           ],
