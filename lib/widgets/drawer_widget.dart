@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pet_feeder/screens/add_pet_screen.dart';
 import 'package:pet_feeder/screens/analytics_screen.dart';
+import 'package:pet_feeder/screens/distance_screen.dart';
 import 'package:pet_feeder/screens/home_screen.dart';
 import 'package:pet_feeder/screens/my_pets_screen.dart';
 import 'package:pet_feeder/screens/schedule_feed.dart';
@@ -88,7 +89,10 @@ class _MyDrawerState extends State<DrawerWidget> {
                 color: Colors.black,
                 fontFamily: 'Bold',
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const DistanceScreen()));
+              },
             ),
             ListTile(
               leading: const Icon(Icons.heat_pump_outlined),
