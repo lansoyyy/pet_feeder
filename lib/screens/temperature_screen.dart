@@ -5,8 +5,8 @@ import 'package:pet_feeder/widgets/drawer_widget.dart';
 import 'package:pet_feeder/widgets/text_widget.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class DistanceScreen extends StatelessWidget {
-  const DistanceScreen({super.key});
+class TemperatureScreen extends StatelessWidget {
+  const TemperatureScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
