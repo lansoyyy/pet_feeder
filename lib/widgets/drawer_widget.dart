@@ -5,6 +5,7 @@ import 'package:pet_feeder/screens/distance_screen.dart';
 import 'package:pet_feeder/screens/home_screen.dart';
 import 'package:pet_feeder/screens/my_pets_screen.dart';
 import 'package:pet_feeder/screens/schedule_feed.dart';
+import 'package:pet_feeder/screens/temperature_screen.dart';
 import 'package:pet_feeder/widgets/button_widget.dart';
 import 'package:pet_feeder/widgets/text_widget.dart';
 
@@ -102,7 +103,10 @@ class _MyDrawerState extends State<DrawerWidget> {
                 color: Colors.black,
                 fontFamily: 'Bold',
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const TemperatureScreen()));
+              },
             ),
             ListTile(
               leading: const Icon(Icons.history),

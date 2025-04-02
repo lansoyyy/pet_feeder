@@ -33,6 +33,7 @@ class TextWidget extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           fontStyle: isItalize! ? FontStyle.italic : null,
           decoration: decoration,
+          decorationColor: color,
           fontWeight: isBold! ? FontWeight.w800 : FontWeight.normal,
           fontSize: fontSize,
           color: color,

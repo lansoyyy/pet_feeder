@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:pet_feeder/utils/colors.dart';
 import 'package:pet_feeder/widgets/drawer_widget.dart';
 import 'package:pet_feeder/widgets/text_widget.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class TemperatureScreen extends StatelessWidget {
   const TemperatureScreen({super.key});
@@ -29,7 +28,7 @@ class TemperatureScreen extends StatelessWidget {
             height: 50,
           ),
           TextWidget(
-            text: 'Current Food Storage Distance:',
+            text: 'Current Temperature:',
             fontSize: 18,
             fontFamily: 'Bold',
           ),
@@ -37,7 +36,7 @@ class TemperatureScreen extends StatelessWidget {
             height: 20,
           ),
           StreamBuilder<DatabaseEvent>(
-              stream: FirebaseDatabase.instance.ref("distance").onValue,
+              stream: FirebaseDatabase.instance.ref("temperature").onValue,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -49,29 +48,23 @@ class TemperatureScreen extends StatelessWidget {
 
                 Map<dynamic, dynamic> data =
                     snapshot.data!.snapshot.value as Map<dynamic, dynamic>;
-
-                return SfRadialGauge(axes: <RadialAxis>[
-                  RadialAxis(minimum: 0, maximum: 250, ranges: <GaugeRange>[
-                    GaugeRange(
-                        startValue: 0, endValue: 50, color: Colors.green),
-                    GaugeRange(
-                        startValue: 50, endValue: 150, color: Colors.orange),
-                    GaugeRange(
-                        startValue: 100, endValue: 250, color: Colors.red)
-                  ], pointers: <GaugePointer>[
-                    NeedlePointer(value: double.parse(data['distance']))
-                  ], annotations: <GaugeAnnotation>[
-                    GaugeAnnotation(
-                        widget: Container(
-                            child: Text(data['distance'],
-                                style: const TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold))),
-                        angle: 90,
-                        positionFactor: 0.5)
-                  ])
-                ]);
-              })
+                return Center(
+                  child: TextWidget(
+                    text: '${data['temperature']}°C',
+                    fontSize: 48,
+                    fontFamily: 'Bold',
+                    color: Colors.red,
+                    decoration: TextDecoration.underline,
+                  ),
+                );
+              }),
+          const SizedBox(
+            height: 20,
+          ),
+          Image.asset(
+            'assets/images/high-temperature.png',
+            height: 300,
+          ),
         ],
       ),
     );
