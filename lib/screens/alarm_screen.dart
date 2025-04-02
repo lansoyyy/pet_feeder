@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_feeder/screens/home_screen.dart';
+import 'package:pet_feeder/widgets/button_widget.dart';
 import 'package:pet_feeder/widgets/text_widget.dart';
 
 class AlarmScreen extends StatefulWidget {
@@ -61,7 +62,24 @@ class _AlarmScreenState extends State<AlarmScreen> {
             const SizedBox(
               height: 50,
             ),
-            Image.asset('assets/images/alarm.gif')
+            Image.asset('assets/images/alarm.gif'),
+            const Expanded(
+              child: SizedBox(
+                height: 50,
+              ),
+            ),
+            ButtonWidget(
+              radius: 100,
+              color: Colors.red,
+              label: 'Done Feeding',
+              onPressed: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const HomeScreen()));
+              },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),
@@ -71,10 +89,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
           Icons.done,
           color: Colors.white,
         ),
-        onPressed: () {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const HomeScreen()));
-        },
+        onPressed: () {},
       ),
     );
   }

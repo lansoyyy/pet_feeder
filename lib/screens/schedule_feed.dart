@@ -92,26 +92,6 @@ class _ScheduleFeedScreenState extends State<ScheduleFeedScreen> {
                 ],
               ),
               const SizedBox(height: 32),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Repeat Daily',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  Switch(
-                    value: isRepeated,
-                    onChanged: (value) {
-                      setState(() {
-                        isRepeated = value;
-                      });
-                      // Handle switch change here
-                    },
-                  ),
-                ],
-              ),
               const Spacer(),
               Center(
                 child: ButtonWidget(

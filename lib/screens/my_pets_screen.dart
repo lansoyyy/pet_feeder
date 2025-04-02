@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pet_feeder/screens/add_pet_screen.dart';
 import 'package:pet_feeder/utils/colors.dart';
+import 'package:pet_feeder/widgets/button_widget.dart';
 import 'package:pet_feeder/widgets/drawer_widget.dart';
 import 'package:pet_feeder/widgets/text_widget.dart';
 
@@ -42,52 +44,74 @@ class MyPetsScreen extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-      body: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('Pets').snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) {
-              print(snapshot.error);
-              return const Center(child: Text('Error'));
-            }
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Padding(
-                padding: EdgeInsets.only(top: 50),
-                child: Center(
-                    child: CircularProgressIndicator(
-                  color: Colors.black,
-                )),
-              );
-            }
+      body: Column(
+        children: [
+          StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance.collection('Pets').snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  print(snapshot.error);
+                  return const Center(child: Text('Error'));
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Padding(
+                    padding: EdgeInsets.only(top: 50),
+                    child: Center(
+                        child: CircularProgressIndicator(
+                      color: Colors.black,
+                    )),
+                  );
+                }
 
-            final data = snapshot.requireData;
-            return ListView.builder(
-              itemCount: data.docs.length,
-              itemBuilder: (context, index) {
-                final pet = data.docs[index];
+                final data = snapshot.requireData;
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: data.docs.length,
+                    itemBuilder: (context, index) {
+                      final pet = data.docs[index];
 
-                return ListTile(
-                  leading: pet['img'] != null
-                      ? CircleAvatar(
-                          backgroundImage: NetworkImage(pet['img']!),
-                        )
-                      : const CircleAvatar(
-                          child: Icon(Icons.pets),
-                        ),
-                  title: Text(pet['name'] ?? ''),
-                  subtitle: Text('${pet['breed']} - ${pet['age']} years old'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PetDetailsPage(pet: pet.data()),
-                      ),
-                    );
-                  },
+                      return ListTile(
+                        leading: pet['img'] != null
+                            ? CircleAvatar(
+                                backgroundImage: NetworkImage(pet['img']!),
+                              )
+                            : const CircleAvatar(
+                                child: Icon(Icons.pets),
+                              ),
+                        title: Text(pet['name'] ?? ''),
+                        subtitle:
+                            Text('${pet['breed']} - ${pet['age']} years old'),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PetDetailsPage(pet: pet.data()),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 );
-              },
-            );
-          }),
+              }),
+          const SizedBox(
+            height: 20,
+          ),
+          ButtonWidget(
+            radius: 100,
+            label: 'Add Pet',
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => const AddPetScreen()));
+            },
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
+      ),
     );
   }
 }

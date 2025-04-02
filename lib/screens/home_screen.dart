@@ -5,6 +5,7 @@ import 'package:pet_feeder/services/add_feed.dart';
 import 'package:pet_feeder/utils/colors.dart';
 import 'package:pet_feeder/widgets/drawer_widget.dart';
 import 'package:pet_feeder/widgets/text_widget.dart';
+import 'package:pet_feeder/widgets/textfield_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,7 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int? _selectedValue;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,65 +66,22 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  final amount = TextEditingController();
+
   showScheduleDialog() {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Select Amount'),
+          title: const Text('Input value (in grams)'),
           content: StatefulBuilder(builder: (context, setState) {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                RadioListTile<int>(
-                  title: const Text('70 grams (appx.)'),
-                  value: 70,
-                  groupValue: _selectedValue,
-                  onChanged: (int? value) {
-                    setState(() {
-                      _selectedValue = value;
-                    });
-                  },
-                ),
-                RadioListTile<int>(
-                  title: const Text('105 grams (appx.)'),
-                  value: 105,
-                  groupValue: _selectedValue,
-                  onChanged: (int? value) {
-                    setState(() {
-                      _selectedValue = value;
-                    });
-                  },
-                ),
-                RadioListTile<int>(
-                  title: const Text('140 grams (appx.)'),
-                  value: 140,
-                  groupValue: _selectedValue,
-                  onChanged: (int? value) {
-                    setState(() {
-                      _selectedValue = value;
-                    });
-                  },
-                ),
-                RadioListTile<int>(
-                  title: const Text('175 grams (appx.)'),
-                  value: 175,
-                  groupValue: _selectedValue,
-                  onChanged: (int? value) {
-                    setState(() {
-                      _selectedValue = value;
-                    });
-                  },
-                ),
-                RadioListTile<int>(
-                  title: const Text('210 grams (appx.)'),
-                  value: 210,
-                  groupValue: _selectedValue,
-                  onChanged: (int? value) {
-                    setState(() {
-                      _selectedValue = value;
-                    });
-                  },
+                TextFieldWidget(
+                  label: 'value',
+                  controller: amount,
+                  inputType: TextInputType.number,
                 ),
               ],
             );
@@ -141,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 DateTime now = DateTime.now();
                 String formattedTime =
                     DateFormat('HH:mm').format(now); // 24-hour format
-                addFeed(_selectedValue, DateTime.now().year,
+                addFeed(int.parse(amount.text), DateTime.now().year,
                     DateTime.now().month, DateTime.now().day, formattedTime);
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const AlarmScreen()));

@@ -4,6 +4,7 @@ import 'package:pet_feeder/screens/analytics_screen.dart';
 import 'package:pet_feeder/screens/home_screen.dart';
 import 'package:pet_feeder/screens/my_pets_screen.dart';
 import 'package:pet_feeder/screens/schedule_feed.dart';
+import 'package:pet_feeder/widgets/button_widget.dart';
 import 'package:pet_feeder/widgets/text_widget.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -26,8 +27,19 @@ class _MyDrawerState extends State<DrawerWidget> {
               decoration: const BoxDecoration(
                 color: Colors.brown,
               ),
-              accountEmail: TextWidget(
-                  text: 'Capstone Project', fontSize: 8, color: Colors.white),
+              accountEmail: ButtonWidget(
+                label: 'Add Pet',
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const AddPetScreen()));
+                },
+                radius: 100,
+                color: Colors.white,
+                width: 80,
+                height: 35,
+                textColor: Colors.black,
+                fontSize: 12,
+              ),
               accountName: TextWidget(
                 text: 'Pet Feeder',
                 fontSize: 14,
@@ -69,6 +81,36 @@ class _MyDrawerState extends State<DrawerWidget> {
               },
             ),
             ListTile(
+              leading: const Icon(Icons.social_distance),
+              title: TextWidget(
+                text: 'Distance',
+                fontSize: 12,
+                color: Colors.black,
+                fontFamily: 'Bold',
+              ),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.heat_pump_outlined),
+              title: TextWidget(
+                text: 'Temperature',
+                fontSize: 12,
+                color: Colors.black,
+                fontFamily: 'Bold',
+              ),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.history),
+              title: TextWidget(
+                text: 'Feeding History',
+                fontSize: 12,
+                color: Colors.black,
+                fontFamily: 'Bold',
+              ),
+              onTap: () {},
+            ),
+            ListTile(
               leading: const Icon(Icons.pets_outlined),
               title: TextWidget(
                 text: 'My Pets',
@@ -79,19 +121,6 @@ class _MyDrawerState extends State<DrawerWidget> {
               onTap: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => const MyPetsScreen()));
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.add_box_outlined),
-              title: TextWidget(
-                text: 'Add Pet',
-                fontSize: 12,
-                color: Colors.black,
-                fontFamily: 'Bold',
-              ),
-              onTap: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const AddPetScreen()));
               },
             ),
             ListTile(
